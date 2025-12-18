@@ -1,0 +1,12 @@
+results.json
+summary.json
+.vscode/
+.idea/
+*.log
+node_modules/
+\.DS_Store
+/.github/workflows/*_local_artifact*# Ignore k6 results and temporary files
+results.json
+*.log
+/node_modules/
+.DS_Store
