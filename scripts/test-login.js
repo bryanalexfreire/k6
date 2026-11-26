@@ -1,6 +1,9 @@
 import { check, sleep } from 'k6';
 import http from 'k6/http';
 import { SharedArray } from 'k6/data';
+import { Counter } from 'k6/metrics';
+
+const statusCount = new Counter('login_status_count');
 
 const creds = new SharedArray('creds', function () {
   const raw = open('../data/credentials.csv');
@@ -39,6 +42,7 @@ export default function () {
   const params = { headers: { 'Content-Type': 'application/json' } };
 
   const res = http.post(url, payload, params);
+  statusCount.add(1, { status: String(res.status) });
 
   check(res, {
     'status is 200': (r) => r.status === 200,
